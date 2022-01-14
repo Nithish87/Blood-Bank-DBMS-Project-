@@ -1,3 +1,44 @@
+<?php
+session_start();
+$emailID=$_SESSION['email'];
+//echo $emailID;
+
+date_default_timezone_set('Asia/Kolkata');
+$date=date('y-m-d');
+//echo $date;
+
+$conn = mysqli_connect("localhost","root","","redvault");
+
+
+if(!$conn)
+{
+    echo "Error";
+}
+/*
+if(isset($_GET['CampID'])){
+    $CampID=$_GET['CampID'];
+}*/
+
+$availablequery = "SELECT * FROM `camp` WHERE CampID not in(select CampID from register where UserID='$emailID') AND CampDate>='$date'";
+$connect = mysqli_query($conn,$availablequery);
+//$num = mysqli_num_rows($connect);
+
+
+$registrationquery="SELECT camp.CampID AS CampID,register.UserID AS UserID, camp.CampDate AS CampDate, camp.Location AS place FROM camp,register WHERE camp.CampID=register.CampID AND register.UserID='$emailID'";
+$connectR = mysqli_query($conn,$registrationquery);
+//echo mysqli_num_rows($connectR);
+
+$donationquery="SELECT camp.CampDate AS CampDate, camp.Location AS place,donated.Quantity AS Quantity FROM camp,donated WHERE camp.CampID=donated.CampID AND donated.UserID='$emailID'";
+$connectD = mysqli_query($conn,$donationquery);
+
+$donutchartquery="SELECT * FROM blood";
+$connectC=mysqli_query($conn,$donutchartquery);
+//echo "Rows=".mysqli_num_rows($connectC);
+
+$welcomequery="SELECT FirstName AS FirstName FROM user WHERE Email='$emailID'";
+$connectW=mysqli_query($conn,$welcomequery);
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,7 +52,9 @@
         <!--Donut chart-->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript" src="scripthome.js"></script>
-            
+
+        
+    
 
     </head>
 
@@ -40,7 +83,10 @@
             <div class="sidebar">
                 <!--<h2>Menu</h2>-->
                 <ul>
-                    <li><a href="profile.html"><i class="fas fa-user"></i>Profile</a></li>
+                <?php //session_start();
+                        $_SESSION['email']=$emailID;
+                ?>
+                    <li><a href="profile.php"><i class="fas fa-user"></i>Profile</a></li>
                     <!--Remove-->
                     <li><a href="#registered_head"><i class="far fa-check-circle"></i> Registered Camps</a></li>
                     <li><a href="#available_head"><i class="fas fa-door-open"></i>Available Camps</a></li>
@@ -52,11 +98,12 @@
 
             <div class="main_content">
                 <!--HEllo-->
-                <div class="head"><h4>Welcome</h4></div>
+                <div class="head"><h4>Welcome <?php $rows = mysqli_fetch_assoc($connectW);
+                echo $rows['FirstName'];?></h4></div>
                 <div class="info">
                     <!--Registered Info to be displayed-->
                     <br>
-                    <div id="registered_head" class="registered_head"><h4>Registered Camps</h4></div>
+                    <div id="registered_head" class="registered_head"><h4>Today's Camps</h4></div>
                     <br>
                     <div class="registered_info">
                         <table>
@@ -64,52 +111,32 @@
                                 <tr>
                                     <th>Date</th>
                                     <th>Location</th>
-                                    <!--<th>Amount(L)</th>-->
+                                    <!--<th>RegistrationID</th>-->
                                     <th>Status</th>
                                     <th id="empty"> </th>
                                 </tr>
                             </thead>
+                            <?php
+                                while($rows = mysqli_fetch_assoc($connectR)){
+                            ?>
                             <tbody>
                                 <tr>
-                                    <td>5/1/2022</td>
-                                    <td>Udupi</td>
-                                    <!--<td>2.5</td>-->
+                                    <td><?php echo $rows['CampDate']; ?></td>
+                                    <td><?php echo $rows['place']; ?></td>
+                                    <!--<td><//php echo $rows['RegistrationID']; ?></td>-->
                                     <td><p class="status">Registered</p></td>
-                                    <td><a href="https:google.com"><i class="fas fa-times"></i></a></td>
+                                    <?php
+                                        $_SESSION['CampID']=$rows['CampID'];
+                                        //echo $rows['CampID'];
+                                        $_SESSION['UserID']=$rows['UserID'];
+                                    ?>
+                                    <td><a href="deregister.php?Camp=<?php echo $rows['CampID'];?>"><i class="fas fa-times"></i></a></td>
                                 </tr>
-
-                                <tr>
-                                    <td>15/1/2022</td>
-                                    <td>Mangalore</td>
-                                    <!--<td>1.5</td>-->
-                                    <td><p class="status">Registered</p></td>
-                                    <td><i class="fas fa-times"></i></td>
-                                </tr>
-
-                                <tr>
-                                    <td>20/1/2022</td>
-                                    <td>Manipal</td>
-                                    <!--<td>1</td>-->
-                                    <td><p class="status">Registered</p></td>
-                                    <td><i class="fas fa-times"></i></td>
-                                </tr>
-
-                                <tr>
-                                    <td>30/1/2022</td>
-                                    <td>Udupi</td>
-                                    <!--<td>1</td>-->
-                                    <td><p class="status">Registered</p></td>
-                                    <td><i class="fas fa-times"></i></td>
-                                </tr>
-
-                                <tr>
-                                    <td>11/2/2022</td>
-                                    <td>Suratkal</td>
-                                   <!--<td>2</td>--> 
-                                    <td><p class="status">Registered</p></td>
-                                    <td><i class="fas fa-times"></i></td>
-                                </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
+                            
                         </table>
                     </div>
 
@@ -121,53 +148,33 @@
                         <table>
                             <thead>
                                 <tr>
+                                    <!--<th>ID</th>-->
                                     <th>Date</th>
                                     <th>Location</th>
-                                    <th>Due for registration</th>
+                                    <!--<th>Due for registration</th>-->
                                     <th>Status</th>
                                     <th id="empty"> </th>
                                 </tr>
                             </thead>
+                            <?php
+                                while($rows = mysqli_fetch_assoc($connect)){
+                            ?>
                             <tbody>
                                 <tr>
-                                    <td>5/1/2022</td>
-                                    <td>Bangalore</td>
-                                    <td>1/1/2022</td>
+                                    <td><?php echo $rows['CampID']; ?></td>
+                                    <td><?php echo $rows['CampDate']; ?></td>
+                                    <td><?php echo $rows['Location']; ?></td>
+                                    <!--<td><//?php echo $rows['DueRegistration']; ?></td>-->
                                     <td><p class="status_available">Available</p></td>
-                                    <td><i class="fas fa-plus"></i></td>
+                                    <?php
+                                        $_SESSION['CampID']=$rows['CampID'];
+                                        $_SESSION['UserID']=$emailID;
+                                    ?>
+                                    <td><a href="register.php"><i class="fas fa-plus"></i></a></td>
                                 </tr>
-
-                                <tr>
-                                    <td>15/1/2022</td>
-                                    <td>Mangalore</td>
-                                    <td>10/1/2022</td>
-                                    <td><p class="status_available">Available</p></td>
-                                    <td><i class="fas fa-plus"></i></td>
-                                </tr>
-
-                                <tr>
-                                    <td>30/1/2022</td>
-                                    <td>Udupi</td>
-                                    <td>25/1/2022</td>
-                                    <td><p class="status_available">Available</p></td>
-                                    <td><i class="fas fa-plus"></i></td>
-                                </tr>
-
-                                <tr>
-                                    <td>5/2/2022</td>
-                                    <td>Manipal</td>
-                                    <td>30/1/2022</td>
-                                    <td><p class="status_available">Available</p></td>
-                                    <td><i class="fas fa-plus"></i></td>
-                                </tr>
-
-                                <tr>
-                                    <td>20/2/2022</td>
-                                    <td>Karkala</td>
-                                    <td>15/2/2022</td>
-                                    <td><p class="status_available">Available</p></td>
-                                    <td><i class="fas fa-plus"></i></td>
-                                </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -186,33 +193,52 @@
                                 <th>Amount(L)</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>11/11/2021</td>
-                                <td>Kadri</td>
-                                <td>1</td>
-                            </tr>
-
-                            <tr>
-                                <td>10/10/2021</td>
-                                <td>Manipal</td>
-                                <td>2</td>
-                            </tr>
-
-                            <tr>
-                                <td>5/9/2021</td>
-                                <td>Moodbidri</td>
-                                <td>1.5</td>
-                            </tr>
-                        </tbody>
+                        <?php
+                                while($rows = mysqli_fetch_assoc($connectD)){
+                            ?>
+                            <tbody>
+                                <tr>
+                                    <td><?php echo $rows['CampDate']; ?></td>
+                                    <td><?php echo $rows['place']; ?></td>
+                                    <td><?php echo $rows['Quantity']; ?></td>
+                                </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                            
                     </table>
                 </div>
 
                 <!--Donut chart-->
+                <div class="blood_info">
                 <br>
                 <div id="chart_head" class="chart_head"><h4>Blood Details</h4></div>
                 <br>
-                <div id="donutchart" style="width: 900px; height: 500px;"></div>
+                
+                
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Quantity(L)</th>
+                            </tr>
+                        </thead>
+                        <?php
+                            while($rows = mysqli_fetch_assoc($connectC)){
+                        ?>
+                        <tbody>
+                            <tr>
+                                <td><?php echo $rows['Name']; ?></td>
+                                <td><?php echo $rows['Quantity']; ?></td>
+                            </tr>
+                        <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!--<div id="donutchart" style="width: 900px; height: 500px;"></div>-->
 
             </div>
 
@@ -236,5 +262,7 @@
             </div>
         </footer>
 
+        
     </body>
-</html>
+
+</html>                                                                                         

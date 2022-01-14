@@ -1,3 +1,25 @@
+<?php
+session_start();
+$emailID=$_SESSION['email'];
+//echo $emailID;
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database_name = "redvault";
+
+$conn = mysqli_connect($servername,$username,$password,$database_name);
+
+if(!$conn)
+{
+	die("connection failed:" . mysqli_connect_error());
+}
+
+$query = "SELECT * FROM `user` WHERE Email='$emailID'";
+$connect = mysqli_query($conn,$query);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,27 +28,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
 
-    <link rel="stylesheet" type="text/css" href="stylesignup.css">
+    <link rel="stylesheet" type="text/css" href="styleprofile.css">
     <script type="text/javascript" src="scriptsignup.js"></script>
 </head>
 <body>
-    
-    <form action="signup.php" method="post" style="border:1px solid #ccc">
+    <?php
+          $_SESSION['email']=$emailID;
+    ?>
+    <form action="profileModify.php" method="post" style="border:1px solid #ccc">
         <div class="container">
+            <?php $rows = mysqli_fetch_assoc($connect);?>
             <h1 style="color: white;">Sign Up</h1>
             <p style="color: white;">Please fill in this form to create an account.</p>
             <br>
             
             <label for="FName"><b>First Name:</b></label>
             <!-- required-> compulsorily should be filed-->
-            <input  type="text" id="FName" name="FName" placeholder="Bruce" required>
+            <input  type="text" id="FName" name="FName" value="<?php echo $rows['FirstName'];?>" required>
         
             <label for="LName"><b>Last Name:</b></label>
-            <input   type="text" id="LName" name="LName" placeholder="Wayne" required>
+            <input   type="text" id="LName" name="LName" value="<?php echo $rows['LastName'];?>" required>
 
             <label for="bDate"><b>Birth Date:</b></label>
             <br>
-            <input type="date" id="bDate" name="bDate" required>
+            <input type="date" id="bDate" name="bDate" value="<?php echo $rows['DateOfBirth'];?>" required>
 
             <br>
             <br>
@@ -48,11 +73,12 @@
 
             <label for="phone"><b>Phone Number:</b></label>
             <br>
-            <input type="tel" id="phone" name="phone" maxlength="10" minlength="10" required>
+            <input type="tel" id="phone" name="phone" maxlength="10" minlength="10" value="<?php echo $rows['Phone'];?>" required>
+            <br>
             <br>
 
             <label for="Address"><b>Address:</b></label>
-            <input  type="text" id="Address" name="Address" placeholder="Mangaluru" required>
+            <input  type="text" id="Address" name="Address" value="<?php echo $rows['Address'];?>" required>
 
             <br>
             <br>
@@ -73,13 +99,13 @@
             </div>
             <br>
 
-            <label for="email"><b>Email:</b></label>
+            <!--<label for="email"><b>Email:</b></label>
             <br>
-            <input type="email" placeholder="example@mail.com" name="email" width="100px" required>
+            <input type="email" value="<?php echo $rows['Email'];?>" name="email" width="100px" required>
             <br>
-            <br>
+            <br>-->
 
-            <label for="psw"><b>Password:</b></label>
+            <label for="psw"><b>New Password:</b></label>
             <input class="password" type="password" placeholder="Enter Password" name="password" minlength="8" maxlength="15" required>
       
             <label for="psw-repeat"><b>Confirm Password:</b></label>
@@ -93,8 +119,8 @@
             -->
 
             <div class="clearfix">
-                <button type="button" class="cancelbtn">Cancel</button>
-                <button type="submit" class="signupbtn">Sign Up</button>
+                <!--<button type="button" class="cancelbtn"><a href="home">Cancel</a></button>-->
+                <button type="submit" class="signupbtn">Update</button>
             </div>
         </div>
     </form>

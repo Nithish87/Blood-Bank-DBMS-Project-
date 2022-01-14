@@ -42,7 +42,9 @@ echo " Recieved";
         //echo " Recieved password";
         $sql="select * from user where Email='".$email."'AND Password='".$password."'limit 1";
 
-        //echo "Checking";
+        //Creating session
+        session_start();
+        $_SESSION['email']=$email;
 
         $result=mysqli_query($conn,$sql);
         if(mysqli_num_rows($result)==1)
@@ -50,7 +52,7 @@ echo " Recieved";
             ?>
             <script type="text/javascript">
 			    alert("You have successfully logged in");
-			    window.location.href="homepage.html";
+			    window.location.href="homepage.php";
 			</script>
             <?php
         }

@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script type="text/javascript" src="scriptsignup.js"></script>
-</head>
-<body>
 <?php
+session_start();
+$emailID=$_SESSION['email'];
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -46,17 +37,18 @@ echo "In Submit";
 
 	$bloodType=$_POST['bloodType'];
 
-    $email = $_POST['email'];
+    //$email = $_POST['email'];
 	
 	$password = $_POST['password'];
 	$password_repeat =$_POST['password-repeat'];
 	
-	$sql_query ="INSERT INTO `user`(`FirstName`, `LastName`,`DateOfBirth`,`Gender`,`Phone`,`Address`,`BloodType`,`Email`,`Password`)
-	 VALUES ('$FName','$LName','$bDate','$gender','$phone','$address','$bloodType','$email','$password')";
+	$sql_query ="UPDATE user set FirstName='$FName', LastName='$LName', DateOfBirth='$bDate',
+    Gender='$gender', Phone='$phone', Address='$address', BloodType='$bloodType',
+    Password='$password' WHERE Email='$emailID'";
 
-	$exists = mysqli_query($conn,"SELECT Email FROM user WHERE email = '$email'");
+	//$exists = mysqli_query($conn,"SELECT Email FROM user WHERE email = '$email'");
 
-	if(mysqli_num_rows($exists)==0){
+	//if(mysqli_num_rows($exists)==0){
 		if($password===$password_repeat){
 			if(mysqli_query($conn,$sql_query))
 			{
@@ -81,7 +73,7 @@ echo "In Submit";
 			</script>
 		<?php
 		}
-	}
+	/*}
 	else{
 		?>
 		<script type="text/javascript">
@@ -89,9 +81,6 @@ echo "In Submit";
 				window.location.href="login.html";
 		</script>
 		<?php
-	}
+	}*/
 }
 ?>
-</body>
-
-</html>
