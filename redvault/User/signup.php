@@ -16,7 +16,7 @@ $username = "root";
 $password = "";
 $database_name = "redvault";
 
-//echo "Hello";
+//Connects to the database;
 
 $conn = mysqli_connect($servername,$username,$password,$database_name);
 
@@ -51,19 +51,32 @@ echo "In Submit";
 	$password = $_POST['password'];
 	$password_repeat =$_POST['password-repeat'];
 	
+	//Creating the sql query
 	$sql_query ="INSERT INTO `user`(`FirstName`, `LastName`,`DateOfBirth`,`Gender`,`Phone`,`Address`,`BloodType`,`Email`,`Password`)
 	 VALUES ('$FName','$LName','$bDate','$gender','$phone','$address','$bloodType','$email','$password')";
 
+	//Checking whether the email already exists in thr datbase
 	$exists = mysqli_query($conn,"SELECT Email FROM user WHERE email = '$email'");
 
 	if(mysqli_num_rows($exists)==0){
+		//No email exists
 		if($password===$password_repeat){
+			//Password and confirm password match
 			if(mysqli_query($conn,$sql_query))
 			{
+				//Redirect to login page
 			?>
 				<script type="text/javascript">
-					alert( "New Details entry inserted successfully !");
-					window.location.href="login.html";
+					/*alert( "New Details entry inserted successfully !");
+					window.location.href="login.html";*/
+					swal({
+                    	title: "Signup successful!!",
+                    	icon: "success",
+                    	button: "Let's go!",
+                	})
+                    .then((value) => {
+                        window.location.href="login.html";
+                	});
 				</script>
 			<?php
 			}
@@ -74,19 +87,37 @@ echo "In Submit";
 			mysqli_close($conn);
 		}
 		else{
+			//Redirect to signup page, since passwords didn't match
 		?>
 			<script type="text/javascript">
-				alert("Password didn't match");
-				window.location.href="signup.html";
+				/*alert("Password didn't match");
+				window.location.href="signup.html";*/
+				swal({
+                    	title: "Passwords didn't match",
+                    	icon: "error",
+                    	button: "Retry",
+                	})
+                    .then((value) => {
+                        window.location.href="signup.html";
+                });
 			</script>
 		<?php
 		}
 	}
 	else{
+		//If the email already exists then redirect to login 
 		?>
 		<script type="text/javascript">
-				alert("Email already exists. ");
-				window.location.href="login.html";
+				/*alert("Email already exists. ");
+				window.location.href="login.html";*/
+				swal({
+                    	title: "Email already exists",
+                    	icon: "error",
+                    	button: "Login",
+                	})
+                    .then((value) => {
+                        window.location.href="login.html";
+                });
 		</script>
 		<?php
 	}

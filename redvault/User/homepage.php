@@ -1,12 +1,14 @@
 <?php
+//Cresting session to receive user email
 session_start();
-if(!isset($_SESSION)){
+if(empty($_SESSION)){
     header("Location:login.html");
 }
 $emailID=$_SESSION['email'];
 //echo $emailID;
 
 date_default_timezone_set('Asia/Kolkata');
+//Get today's date
 $date=date('y-m-d');
 //echo $date;
 
@@ -22,22 +24,23 @@ if(isset($_GET['CampID'])){
     $CampID=$_GET['CampID'];
 }*/
 
-$availablequery = "SELECT * FROM `camp` WHERE CampID not in(select CampID from register where UserID='$emailID') AND CampDate>='$date'";
+//Query to find today's camps
+$availablequery = "SELECT * FROM `camp` WHERE CampID not in(select CampID from register where UserID='$emailID') AND CampID not in(select CampID from donated where UserID='$emailID') AND CampDate>='$date'";
 $connect = mysqli_query($conn,$availablequery);
-//$num = mysqli_num_rows($connect);
 
-
+//Query for user to register to a camp
 $registrationquery="SELECT camp.CampID AS CampID,register.UserID AS UserID, camp.CampDate AS CampDate, camp.Location AS place FROM camp,register WHERE camp.CampID=register.CampID AND register.UserID='$emailID'";
 $connectR = mysqli_query($conn,$registrationquery);
-//echo mysqli_num_rows($connectR);
 
+//Query to get the donation info of the user
 $donationquery="SELECT camp.CampDate AS CampDate, camp.Location AS place,donated.Quantity AS Quantity FROM camp,donated WHERE camp.CampID=donated.CampID AND donated.UserID='$emailID'";
 $connectD = mysqli_query($conn,$donationquery);
 
+//Query to get total donations
 $donutchartquery="SELECT * FROM blood";
 $connectC=mysqli_query($conn,$donutchartquery);
-//echo "Rows=".mysqli_num_rows($connectC);
 
+//Query to fetch user first name
 $welcomequery="SELECT FirstName AS FirstName FROM user WHERE Email='$emailID'";
 $connectW=mysqli_query($conn,$welcomequery);
 ?>
@@ -62,7 +65,9 @@ $connectW=mysqli_query($conn,$welcomequery);
     </head>
 
     <body>
+        <!--Header of the website-->
         <div class="header">
+            <!--LOgo image-->
             <img src="../Images/blood donation logo.png" height="80" width="100">
             <div class="inner_header">
                 <div class="logo_container">
@@ -71,9 +76,14 @@ $connectW=mysqli_query($conn,$welcomequery);
                 </div>
 
                 <ul class="navigation">
+                    <!--Logout buttin-->
                   <a href="logout.php"><li><i class="fas fa-sign-out-alt"></i></li></a>
+                  <!--Redirects to "About us" section-->
                   <a href="#about_us"><li>About Us</li></a>  
-                  <a href="homepage.html"><li>Home</li></a>
+                  <?php
+                        //$_SESSION['email']=$emailID;
+                  ?>
+                  <!--<a href="homepage.php"><li>Home</li></a>-->
                 </ul>
             </div>
         </div>
@@ -89,11 +99,15 @@ $connectW=mysqli_query($conn,$welcomequery);
                 <?php //session_start();
                         $_SESSION['email']=$emailID;
                 ?>
+                    <!--Redirects to the profile page of the user-->
                     <li><a href="profile.php"><i class="fas fa-user"></i>Profile</a></li>
-                    <!--Remove-->
+                    <!--Moves to registered camps table-->
                     <li><a href="#registered_head"><i class="far fa-check-circle"></i> Registered Camps</a></li>
+                    <!--Moves to available camps table-->
                     <li><a href="#available_head"><i class="fas fa-door-open"></i>Available Camps</a></li>
+                    <!--Moves to donation history table-->
                     <li><a href="#past_head"><i class="fas fa-history"></i>Past Donations</a></li>
+                    <!--Moves to total donations table-->
                     <li><a href="#chart_head"><i class="fas fa-archive"></i>Blood Bank</a></li>
                 </ul>
                 
@@ -112,6 +126,7 @@ $connectW=mysqli_query($conn,$welcomequery);
                         <table>
                             <thead>
                                 <tr>
+                                    <th>Camp ID</th>
                                     <th>Date</th>
                                     <th>Location</th>
                                     <!--<th>RegistrationID</th>-->
@@ -124,15 +139,16 @@ $connectW=mysqli_query($conn,$welcomequery);
                             ?>
                             <tbody>
                                 <tr>
-                                    <!--<td><//php echo $rows['RegistrationID']; ?></td>-->
+                                    <td><?php echo $rows['CampID'] ?></td>
                                     <td><?php echo $rows['CampDate']; ?></td>
                                     <td><?php echo $rows['place']; ?></td>
                                     <td><p class="status">Registered</p></td>
                                     <?php
+                                        //Camp and user id to the deregistr.php
                                         $_SESSION['CampID']=$rows['CampID'];
-                                        //echo $rows['CampID'];
                                         $_SESSION['UserID']=$rows['UserID'];
                                     ?>
+                                    <!--Button for deregestration-->
                                     <td><a href="deregister.php?Camp=<?php echo $rows['CampID'];?>"><i class="fas fa-times"></i></a></td>
                                 </tr>
                                 <?php
@@ -170,9 +186,11 @@ $connectW=mysqli_query($conn,$welcomequery);
                                     <!--<td><//?php echo $rows['DueRegistration']; ?></td>-->
                                     <td><p class="status_available">Available</p></td>
                                     <?php
+                                        //Camp and user ID for register.php
                                         $_SESSION['CampID']=$rows['CampID'];
                                         $_SESSION['UserID']=$emailID;
                                     ?>
+                                    <!--BUtton for regustration-->
                                     <td><a href="register.php"><i class="fas fa-plus"></i></a></td>
                                 </tr>
                                 <?php
@@ -193,7 +211,7 @@ $connectW=mysqli_query($conn,$welcomequery);
                             <tr>
                                 <th>Date</th>
                                 <th>Location</th>
-                                <th>Amount(L)</th>
+                                <th>Amount(mL)</th>
                             </tr>
                         </thead>
                         <?php
@@ -213,10 +231,10 @@ $connectW=mysqli_query($conn,$welcomequery);
                     </table>
                 </div>
 
-                <!--Donut chart-->
+                <!--Total contribution done to the blood bank-->
                 <div class="blood_info">
                 <br>
-                <div id="chart_head" class="chart_head"><h4>Blood Details</h4></div>
+                <div id="chart_head" class="chart_head"><h4>Our Achievements</h4></div>
                 <br>
                 
                 
@@ -263,9 +281,6 @@ $connectW=mysqli_query($conn,$welcomequery);
             <div class="footer-bottom">
                 <p>copyright &copy;2022 RedVault</p>
             </div>
-        </footer>
-
-        
+        </footer> 
     </body>
-
 </html>                                                                                         

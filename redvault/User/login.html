@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-
-
-
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="stylelogin.css">
@@ -20,6 +17,7 @@
     <div class="center">
         <h1>Log In</h1>
 
+        <!--User fills login info-->
         <form action="login.php" method="post">
             <div class="txt_field">
                 <!-- required-> compulsorily should be filed-->
@@ -38,53 +36,18 @@
            <!--<div class="pass">Forgot Password</div>--> 
 
             <div>
+                <!--Redirect to login.php-->
                 <br>
                 <input type="submit" value="Login">
             </div>
 
             <div class="signup">
+                <!--Hypertext links for login as Admin and Signup-->
                 Login as <a href="../Admin/loginAdmin.html">Admin</a>
                 <br>
                 Not a member? <a href="signup.html">Signup</a>
             </div>
         </form>
     </div>
-       
-       <!--
-       <div style="max-width:100%">
-         <img class="mySlides"  src="./Images/blood bank2.jpg" >
-         <img class="mySlides"  src="./Images/blood bank4.jpg" >
-       </div>
-    -->
-
-       <script>
-       var myIndex = 0;
-       carousel();
-       
-       function carousel() {
-           var i;
-           var x = document.getElementsByClassName("mySlides");
-           for (i = 0; i < x.length; i++) {
-              x[i].style.display = "none";  
-           }
-           myIndex++;
-           if (myIndex > x.length) {myIndex = 1}    
-           x[myIndex-1].style.display = "block";  
-           setTimeout(carousel, 2000); // Change image every 2 seconds
-       }
-       </script>
-       
-       
-       
-       <div class="row1"> 
-       <div class="container"> 
-       <br>         
-       <br>
-           </tbody>
-         </table>
-       </div>
-       </div>
-       <!--<h3><center>All Right Reserved @ BTech Days :: 2020  </center></h3>-->
-       
        </body>
 </html>

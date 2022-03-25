@@ -1,3 +1,10 @@
+<html>
+	<head>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	</head>
+</html>
+
+
 <?php
 session_start();
 $emailID=$_SESSION['email'];
@@ -43,6 +50,7 @@ echo "In Submit";
 	$password = $_POST['password'];
 	$password_repeat =$_POST['password-repeat'];
 	
+	//Query to update profile
 	$sql_query ="UPDATE user set FirstName='$FName', LastName='$LName', DateOfBirth='$bDate',
     Gender='$gender', Phone='$phone', Address='$address', BloodType='$bloodType',
     Password='$password' WHERE Email='$emailID'";
@@ -51,12 +59,22 @@ echo "In Submit";
 
 	//if(mysqli_num_rows($exists)==0){
 		if($password===$password_repeat){
+			//If password and confirm password are same
 			if(mysqli_query($conn,$sql_query))
 			{
+				//If successful redirect to login page
 			?>
 				<script type="text/javascript">
-					alert( "New Details entry inserted successfully !");
-					window.location.href="login.html";
+					/*alert( "Profile updated successfully !");
+					window.location.href="login.html";*/
+					swal({
+                    	title: "Profile updated successfully!",
+                    	icon: "success",
+                    	button: "Login",
+                	})
+                    .then((value) => {
+                        window.location.href="login.html";
+                	});
 				</script>
 			<?php
 			}
@@ -69,8 +87,16 @@ echo "In Submit";
 		else{
 		?>
 			<script type="text/javascript">
-				alert("Password didn't match");
-				window.location.href="profile.php";
+				/*alert("Password didn't match");
+				window.location.href="profile.php";*/
+				swal({
+                    	title: "Passwords didn't match",
+                    	icon: "error",
+                    	button: "Retry",
+                })
+                    .then((value) => {
+                        window.location.href="profile.php";
+                });
 			</script>
 		<?php
 		}

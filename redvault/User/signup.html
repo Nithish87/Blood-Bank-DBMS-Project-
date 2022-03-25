@@ -11,6 +11,7 @@
 </head>
 <body>
     
+    <!--Form for the user to fill for registering-->
     <form action="signup.php" method="post" style="border:1px solid #ccc">
         <div class="container">
             <h1 style="color: white;">Sign Up</h1>
@@ -32,7 +33,7 @@
             <br>
             <!--Gender-->
             <div>
-                <label><b>Title:</b></label>
+                <label><b>Gender:</b></label>
                 <br>
 
                 <input type="radio" id="Male" name="gender" value="Male" required>
@@ -49,7 +50,7 @@
             <label for="phone"><b>Phone Number:</b></label>
             <br>
             <input type="tel" id="phone" name="phone" maxlength="10" minlength="10" required>
-            <br>
+            <br><br>
 
             <label for="Address"><b>Address:</b></label>
             <input  type="text" id="Address" name="Address" placeholder="Mangaluru" required>
@@ -84,22 +85,14 @@
       
             <label for="psw-repeat"><b>Confirm Password:</b></label>
             <input class="password-repeat" type="password" placeholder="Repeat Password" name="password-repeat" required>
-      
-            <!--<label>
-            <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-            </label>
-      
-            <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
-            -->
 
             <div class="clearfix">
-                <button type="button" class="cancelbtn">Cancel</button>
+                <!--Cancel button takes the user back to the login page-->
+                <a href="login.html"><button type="button" class="cancelbtn">Cancel</button></a>
+                <!--Signup button sends the user info to signup.php-->
                 <button type="submit" class="signupbtn">Sign Up</button>
             </div>
         </div>
     </form>
-
-    
-
 </body>
 </html>

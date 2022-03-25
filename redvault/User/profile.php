@@ -15,6 +15,7 @@ if(!$conn)
 	die("connection failed:" . mysqli_connect_error());
 }
 
+//Query to retrive user info
 $query = "SELECT * FROM `user` WHERE Email='$emailID'";
 $connect = mysqli_query($conn,$query);
 
@@ -30,6 +31,12 @@ $connect = mysqli_query($conn,$query);
 
     <link rel="stylesheet" type="text/css" href="styleprofile.css">
     <script type="text/javascript" src="scriptsignup.js"></script>
+
+    <style>
+        body{
+            background-image: url(../Images/background22.jpg);
+        }
+    </style>
 </head>
 <body>
     <?php
@@ -111,21 +118,11 @@ $connect = mysqli_query($conn,$query);
             <label for="psw-repeat"><b>Confirm Password:</b></label>
             <input class="password-repeat" type="password" placeholder="Repeat Password" name="password-repeat" required>
       
-            <!--<label>
-            <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-            </label>
-      
-            <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
-            -->
-
             <div class="clearfix">
-                <!--<button type="button" class="cancelbtn"><a href="home">Cancel</a></button>-->
+                <!--Button to update profile-->
                 <button type="submit" class="signupbtn">Update</button>
             </div>
         </div>
     </form>
-
-    
-
 </body>
 </html>
