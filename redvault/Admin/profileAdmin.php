@@ -15,6 +15,7 @@ if(!$conn)
 	die("connection failed:" . mysqli_connect_error());
 }
 
+//Query to get admin info
 $query = "SELECT * FROM admin WHERE Email='$emailID'";
 $connect = mysqli_query($conn,$query);
 
@@ -26,14 +27,14 @@ $connect = mysqli_query($conn,$query);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Admin Profile</title>
 
     <link rel="stylesheet" type="text/css" href="../User/styleprofile.css">
     <script type="text/javascript" src="../User/scriptsignup.js"></script>
 
     <style>
         body{
-            background-image: url(../Images/background13.jpg);
+            background-image: url(../Images/background24.png);
         }
     </style>
 </head>
@@ -58,7 +59,7 @@ $connect = mysqli_query($conn,$query);
             <br>
             <!--Gender-->
             <div>
-                <label><b>Title:</b></label>
+                <label><b>Gender:</b></label>
                 <br>
 
                 <input type="radio" id="Male" name="gender" value="Male" required>
@@ -88,7 +89,7 @@ $connect = mysqli_query($conn,$query);
       
 
             <div class="clearfix">
-                <!--<button type="button" class="cancelbtn"><a href="home">Cancel</a></button>-->
+                <!--Button to confirm updation-->
                 <button type="submit" class="signupbtn">Update</button>
             </div>
         </div>

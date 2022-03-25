@@ -23,9 +23,11 @@
         die("connection failed:" . mysqli_connect_error());
     }
 
+    //Query to get today's capm details
     $Campquery="SELECT * from camp where CampDate='$date'";
     $connectC=mysqli_query($conn,$Campquery);
 
+    //Query to select users registrations for today
     $UserQuery="SELECT distinct(UserID) from register where CampID in (SELECT CampID from camp where CampDate='$date')";
     $connectU=mysqli_query($conn,$UserQuery);
 ?>
@@ -44,6 +46,7 @@
 </head>
 <body>
     
+    <!--Form to fill for donation-->
     <form action="donationsReport.php" method="post" style="border:1px solid #ccc">
         <div class="container">
             <h1 style="color: white;">Donation Confirmation</h1>
@@ -83,13 +86,13 @@
 
             <br>
             <!-- CampID Drop dowm menu-->
-            <label for="Quantity"><b>Quantity:</b></label>
+            <label for="Quantity"><b>Quantity(mL):</b></label>
             <br>
             <input type="number" placeholder="1" name="Quantity" width="40px" required>
 
             <br><br>
             <div class="clearfix">
-                <!--<button type="button" class="cancelbtn">Cancel</button>-->
+                <!--Confirm donations button-->
                 <button type="submit" class="createButton">Confirm Donation</button>
             </div>
             <br>

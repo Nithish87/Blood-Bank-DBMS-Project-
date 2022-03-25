@@ -1,3 +1,10 @@
+<html>
+	<head>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	</head>
+</html>
+
+
 <?php
 session_start();
 $emailID=$_SESSION['email'];
@@ -41,12 +48,22 @@ echo "In Submit";
 
 	//if(mysqli_num_rows($exists)==0){
 		if($password===$password_repeat){
+			//If password and confirm password are same
 			if(mysqli_query($conn,$sql_query))
-			{echo "Login";
+			{//echo "Login";
+				//Updation successful, redirect to login
 			?>
 				<script type="text/javascript">
-					alert( "New Details entry inserted successfully !");
-					window.location.href="loginAdmin.html";
+					/*alert( "Profile updated successfully !");
+					window.location.href="loginAdmin.html";*/
+					swal({
+                    	title: "Profile updated successfully!",
+                    	icon: "success",
+                    	button: "Login",
+                	})
+                    .then((value) => {
+                        window.location.href="loginAdmin.html";
+                	});
 				</script>
 			<?php
 			}
@@ -56,11 +73,19 @@ echo "In Submit";
 			}
 			mysqli_close($conn);
 		}
-		else{echo "profile";
+		else{//echo "profile";
 		?>
 			<script type="text/javascript">
-				alert("Password didn't match");
-				window.location.href="profileAdmin.php";
+				/*alert("Password didn't match");
+				window.location.href="profileAdmin.php";*/
+				swal({
+                    	title: "Passwords didn't match",
+                    	icon: "error",
+                    	button: "Retry",
+                })
+                    .then((value) => {
+                        window.location.href="profileAdmin.php";
+                });
 			</script>
 		<?php
 		}

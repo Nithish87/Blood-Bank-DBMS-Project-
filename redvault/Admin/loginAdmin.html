@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-
-
-
 <html>
     <head>
+        <title>Admin Login</title>
         <link rel="stylesheet" type="text/css" href="../User/stylelogin.css">
 
         <style> 
@@ -24,18 +22,10 @@
     </head>
 
     <body>
-       <!--
-       <div class="header">
-         <a href="#default" class="logo"><img class="logo" src="Logo1.png"></a>
-         <div class="header-right">
-           <a class="active" href="index.jsp">Home</a>
-           <a href="adminLogin.jsp">Admin Login</a>
-         </div>
-       </div>
-    -->
     <div class="center">
-        <h1>Log In</h1>
+        <h1>Admin Log In</h1>
 
+        <!--FIll admin info for login-->
         <form action="loginAdmin.php" method="post">
             <div class="txt_field">
                 <!-- required-> compulsorily should be filed-->
@@ -54,48 +44,15 @@
            <!--<div class="pass">Forgot Password</div>--> 
 
             <div>
+                <!--Redirects to loginAdmin.php-->
                 <br>
                 <input type="submit" value="Login">
             </div>
-            <br>
+            <!--Button to login as user-->
+            <div class="signup">
+                Login as <a href="../User/login.html">User</a>
+            </div>
         </form>
-    </div>
-       
-       <!--
-       <div style="max-width:100%">
-         <img class="mySlides"  src="./Images/blood bank2.jpg" >
-         <img class="mySlides"  src="./Images/blood bank4.jpg" >
-       </div>
-    -->
-
-       <script>
-       var myIndex = 0;
-       carousel();
-       
-       function carousel() {
-           var i;
-           var x = document.getElementsByClassName("mySlides");
-           for (i = 0; i < x.length; i++) {
-              x[i].style.display = "none";  
-           }
-           myIndex++;
-           if (myIndex > x.length) {myIndex = 1}    
-           x[myIndex-1].style.display = "block";  
-           setTimeout(carousel, 2000); // Change image every 2 seconds
-       }
-       </script>
-       
-       
-       
-       <div class="row1"> 
-       <div class="container"> 
-       <br>         
-       <br>
-           </tbody>
-         </table>
-       </div>
-       </div>
-       <!--<h3><center>All Right Reserved @ BTech Days :: 2020  </center></h3>-->
-       
-       </body>
+    </div> 
+    </body>
 </html>

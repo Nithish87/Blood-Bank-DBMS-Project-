@@ -1,5 +1,6 @@
 <?php
 session_start();
+//Receive admin email from login page
 $emailID=$_SESSION['email'];
 //echo $emailID;
 
@@ -19,22 +20,19 @@ if(isset($_GET['CampID'])){
     $CampID=$_GET['CampID'];
 }*/
 
+//Query for available camps
 $availablequery = "SELECT * FROM `camp` WHERE CampID not in(select CampID from register where UserID='$emailID') AND CampDate>'$date'";
 $connect = mysqli_query($conn,$availablequery);
-//$num = mysqli_num_rows($connect);
 
-
+//Query to display today's camps
 $todayquery="SELECT * FROM camp where CampDate='$date'";
 $connectT = mysqli_query($conn,$todayquery);
-//echo mysqli_num_rows($connectR);
 
-//$donationquery="SELECT camp.CampDate AS CampDate, camp.Location AS place,donated.Quantity AS Quantity FROM camp,donated WHERE camp.CampID=donated.CampID AND donated.UserID='$emailID'";
-//$connectD = mysqli_query($conn,$donationquery);
-
+//Query for total donations
 $donutchartquery="SELECT * FROM blood";
 $connectC=mysqli_query($conn,$donutchartquery);
-//echo "Rows=".mysqli_num_rows($connectC);
 
+//Query to get first name of admin
 $welcomequery="SELECT * FROM admin WHERE Email='$emailID'";
 $connectW=mysqli_query($conn,$welcomequery);
 
@@ -43,7 +41,7 @@ $connectW=mysqli_query($conn,$welcomequery);
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Homepage</title>
+        <title> Admin Homepage</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="../User/stylehome.css">
         <script src="https://kit.fontawesome.com/6e9ba28a08.js" crossorigin="anonymous"></script>
@@ -101,9 +99,10 @@ $connectW=mysqli_query($conn,$welcomequery);
                 </div>
 
                 <ul class="navigation">
+                  <!--Logout button-->
                   <a href="loginAdmin.html"><li><i class="fas fa-sign-out-alt"></i></li></a>
+                  <!--Moves to about us section-->
                   <a href="#about_us"><li>About Us</li></a>  
-                  <a href="adminhome.html"><li>Home</li></a>
                 </ul>
             </div>
         </div>
@@ -119,11 +118,16 @@ $connectW=mysqli_query($conn,$welcomequery);
                 <?php //session_start();
                         $_SESSION['email']=$emailID;
                 ?>
+                    <!--Goes to admin profile-->
                     <li><a href="profileAdmin.php"><i class="fas fa-user"></i>Profile</a></li>
+                    <!--Goes to today's camps table-->
                     <li><a href="#registered_head"><i class="far fa-check-circle"></i> Today's Camps</a></li>
+                    <!--Goes to upcoming camps table-->
                     <li><a href="#available_head"><i class="fas fa-door-open"></i>Upcoming Camps</a></li>
                     <!--<li><a href="#past_head"><i class="fas fa-history"></i>Past Donations</a></li>-->
+                    <!--Goes to total donations table-->
                     <li><a href="#chart_head"><i class="fas fa-archive"></i>Blood Bank</a></li>
+                    <!--Button to page to confirming donations-->
                     <li><a href="donations.php"><i class="fas fa-file-medical"></i>Confirm Donations</a><li>
                 </ul>
                 
@@ -158,6 +162,7 @@ $connectW=mysqli_query($conn,$welcomequery);
                                     <td><?php echo $rows['CampDate']; ?></td>
                                     <td><?php echo $rows['Location']; ?></td>
                                     <?php
+                                        //Query to display the no.of registrations for today's camps
                                         $registrationquery="SELECT count(*) from register WHERE CampID='$no'";
                                         $connectRe=mysqli_query($conn,$registrationquery);
                                         $rowsR = mysqli_fetch_assoc($connectRe);
@@ -197,6 +202,7 @@ $connectW=mysqli_query($conn,$welcomequery);
                                     <td><?php echo $rows['CampDate']; ?></td>
                                     <td><?php echo $rows['Location']; ?></td>
                                     <?php
+                                        //Query to dispaly registrations to upcoming camps
                                         $registrationquery="SELECT count(*) from register WHERE CampID='$no'";
                                         $connectRe=mysqli_query($conn,$registrationquery);
                                         $rowsR = mysqli_fetch_assoc($connectRe);
@@ -216,14 +222,15 @@ $connectW=mysqli_query($conn,$welcomequery);
                     <?php
                         $_SESSION['Admin']=$emailID;
                     ?>
+                    <!--Button to create camps-->
                     <a href="create.php"><i class="fas fa-plus-circle"></i></a><b> Create</b>
                 </div>
                 
                 <br>
-                <!--Donut chart-->
+                <!--Total donations-->
                 <div class="blood_info">
                 <br>
-                <div id="chart_head" class="chart_head"><h4>Blood Details</h4></div>
+                <div id="chart_head" class="chart_head"><h4>Our Achievements</h4></div>
                 <br>
                 
                 

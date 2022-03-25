@@ -1,3 +1,10 @@
+<html>
+	<head>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	</head>
+</html>
+
+
 <?php
     $servername = "localhost";
     $username = "root";
@@ -15,28 +22,39 @@
         die("connection failed:" . mysqli_connect_error());
     }
 
-    if(isset($_POST['submit']))
+//REceive the camp details
+if(isset($_POST['submit']))
 echo "In Submit";
 {
 	$Location=$_POST['Location'];
 
 	$CampDate=$_POST['CampDate'];
 
-	$DueDate=$_POST['DueDate'];
+	//$DueDate=$_POST['DueDate'];
 
     session_start();
     $AdminID=$_SESSION['Admin'];
 	
-	$sql_query ="INSERT INTO `camp`(`Location`, `CampDate`,`DueRegistration`,EmpID)
-	 VALUES ('$Location','$CampDate','$DueDate','$AdminID')";
+	//Query to insert the camp info into the table
+	$sql_query ="INSERT INTO `camp`(`Location`, `CampDate`,EmpID)
+	 VALUES ('$Location','$CampDate','$AdminID')";
 
 
 	if(mysqli_query($conn,$sql_query))
 	{
+		//Confirm the creation and redirect to admin home
 	    ?>
 		<script type="text/javascript">
-			alert( "New Camp entry successfully !");
-			window.location.href="adminhome.php";
+			/*alert( "New Camp entry successfully !");
+			window.location.href="adminhome.php";*/
+			swal({
+                title: "New Camp added",
+                icon: "success",
+                button: "Okay",
+            })
+            .then((value) => {
+                window.location.href="adminhome.php";
+            });
 		</script>
 		<?php
 	}
