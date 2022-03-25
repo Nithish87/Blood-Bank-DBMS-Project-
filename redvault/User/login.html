@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="stylelogin.css">
+    </head>
+
+    <body>
+       <!--
+       <div class="header">
+         <a href="#default" class="logo"><img class="logo" src="Logo1.png"></a>
+         <div class="header-right">
+           <a class="active" href="index.jsp">Home</a>
+           <a href="adminLogin.jsp">Admin Login</a>
+         </div>
+       </div>
+    -->
+    <div class="center">
+        <h1>Log In</h1>
+
+        <!--User fills login info-->
+        <form action="login.php" method="post">
+            <div class="txt_field">
+                <!-- required-> compulsorily should be filed-->
+                <input type="email" id="emailID" name="emailID" required>
+                <br>
+                <span></span>
+                <label for="emailID">Email ID:</label>
+            </div>
+
+            <div  class="txt_field">
+                <input type="password" id="password" name="password" minlength="8" maxlength="15" required>
+                <br>
+                <label for="password">Password:</label>
+            </div>
+
+           <!--<div class="pass">Forgot Password</div>--> 
+
+            <div>
+                <!--Redirect to login.php-->
+                <br>
+                <input type="submit" value="Login">
+            </div>
+
+            <div class="signup">
+                <!--Hypertext links for login as Admin and Signup-->
+                Login as <a href="../Admin/loginAdmin.html">Admin</a>
+                <br>
+                Not a member? <a href="signup.html">Signup</a>
+            </div>
+        </form>
+    </div>
+       </body>
+</html>

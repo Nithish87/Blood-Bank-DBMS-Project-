@@ -1,0 +1,398 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    text-decoration: none;
+    /*overflow-x: hidden;*/
+}
+
+body{
+    background-color: rgb(247, 239, 239);
+    
+}
+
+/*Header*/
+.header{
+    width: 100%;
+    height: 80px;
+    display: block;
+    background-color: rgb(14, 7, 75);
+}
+
+img{
+    float: left;
+}
+.inner_header{
+    width: 1000px;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+    /*background-color: red;*/
+}
+
+.logo_container{
+    height: 100%;
+    display: table;
+    float: left;
+}
+
+.logo_container h1{
+    color: rgb(238, 65, 65);
+    font-family: "Montserrat";
+    font-size: 70px;
+    display: table;
+    vertical-align: middle;
+    font-weight: 800;
+}
+
+#s1{
+    font-weight: 200;
+    color: whitesmoke;
+}
+
+#s2{
+    font-weight: 40;
+    font-size: 30px;
+    font-family: sans-serif;
+    color: rgb(238, 65, 65);
+}
+
+.navigation{
+    float: right;
+    height: 100%;
+}
+
+.navigation a{
+    height: 100%;
+    display: table;
+    float: right;
+    padding: 0px 20px;
+}
+
+.navigation a:last-child{
+    padding-right: 0;
+}
+
+.navigation a li{
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    color: white;
+    font-family: "Montserrat";
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.navigation a li:hover{
+    color: rgb(231, 18, 18);
+}
+
+/*.navigation a li:active{
+    color: rgb(231, 18, 18);
+}*/
+
+/*Images*/
+.slideImages{
+    width: 99.4%;
+    height: 450px;
+    position: relative;
+    /*
+    top: 15%;
+    left: 50%;
+    transform: translate(-525px,-15px);
+    */
+    background-image: url(../Images/blood\ bank4.jpg);
+    background-size: cover;
+    border: 5px solid lightblue;
+    animation: 15s linear 0s infinite running slider;
+}
+@keyframes slider {
+    0% {background-image: url(../Images/blood\ bank4.jpg);}
+    25% {background-image: url(../Images/blood\ bank2.jpg);}
+    50% {background-image: url(../Images/blood\ bank3.jpg);}
+    75% {background-image: url(../Images/blood\ bank1.jpg);}
+    
+}
+
+/*Menu Bar*/
+.wrapper{
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /*transform: translate(-10px,460px);*/
+}
+
+.wrapper .sidebar{
+    position: sticky;
+    top: 0px;
+    width: 300px;
+    height: 100%;
+    background: rgb(14, 7, 75);
+    padding: 30px 0;
+}
+
+.wrapper .sidebar h2{
+    color: blue;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.wrapper .sidebar ul li{
+    padding: 15px;
+    border-bottom: 1px solid rgba(0,0, 0, 0.05);
+    border-top: 1px solid rgba(225,225,225,0.05);
+}
+
+.wrapper .sidebar ul li a{
+    color: #bdb8d7;
+    display: block;
+}
+
+.wrapper .sidebar ul li a .fas{
+    width: 25px;
+}
+
+.wrapper .sidebar ul li:hover{
+    background: #594f8d;
+}
+
+.wrapper .sidebar ul li:hover a{
+    color: #fff;
+}
+
+
+
+.wrapper .main_content{
+    width: 100%;
+    margin-left: 10px;
+}
+
+.wrapper .main_content .head{
+    padding: 20px;
+    background: white;
+    color: darkblue;
+    border-bottom: 1px solid #e0e4e8;
+    font-size: 45px;
+    border-radius: 5px;
+}
+
+
+/*Info to be displayed*/
+
+/*Registered Table*/
+.registered_head{
+    color: white;
+    padding: 20px;
+    width: 82%;
+    background: rgb(14, 7, 75);
+    border-bottom: 1px solid #e0e4e8;
+    font-size: 20px;
+    border-radius: 10px;
+    font-family: "Roboto Slab";
+}
+
+.registered_info{
+    
+    display: grid;
+    /*justify-content: center;*/
+    width: 85%;
+    /*align-items: center;*/
+    background-color: whitesmoke;
+    color: gray;
+}
+
+table{
+    border-collapse: collapse;
+    box-shadow: 0 5px 10px lightgray;
+    background-color: white;
+    text-align: left;
+    overflow: hidden;
+    border-radius: 20px;
+}
+table thead{
+    box-shadow: 0 5px 10px lightgray;
+    background-color: whitesmoke;
+}
+
+table thead th{
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-size: 0.9rem;
+    font-weight: 900;
+    font-family: "PT Serif";
+    color: darkblue;
+}
+
+table tbody{
+    justify-content: center;
+}
+
+table tbody td{
+    padding: 1rem 2rem;
+}
+
+
+.status{
+    border-radius: 10px;
+    background-color: green;
+    color: white;
+    padding: 0.2em 1rem;
+    text-align: center;
+    width: 70px;
+}
+
+/*Alternate colour*/
+table tbody tr:nth-child(even){
+    background-color: rgb(229, 226, 226);
+}
+
+.fa-times {
+    color: red;
+}
+.fa-times:hover{
+    color: black;
+}
+
+/*Available Table*/
+.available_head{
+    color: white;
+    padding: 20px;
+    width: 82%;
+    background: rgb(14, 7, 75);
+    border-bottom: 1px solid #e0e4e8;
+    font-size: 20px;
+    border-radius: 10px;
+    font-family: "Roboto Slab";
+}
+
+.available_info{
+    
+    display: grid;
+    /*justify-content: center;*/
+    width: 85%;
+    /*align-items: center;*/
+    background-color: whitesmoke;
+    color: gray;
+}
+
+.fa-plus{
+    color: rgb(17, 153, 17);
+}
+.fa-plus:hover{
+    color: black;
+}
+
+.status_available{
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    padding: 0.2em 1rem;
+    text-align: center;
+    width: 70px;
+}
+
+/*Past Donations Table*/
+.past_head{
+    color: white;
+    padding: 20px;
+    width: 82%;
+    background: rgb(14, 7, 75);
+    border-bottom: 1px solid #e0e4e8;
+    font-size: 20px;
+    border-radius: 10px;
+    font-family: "Roboto Slab";
+}
+
+.past_info{
+    
+    display: grid;
+    /*justify-content: center;*/
+    width: 85%;
+    /*align-items: center;*/
+    background-color: whitesmoke;
+    color: gray;
+}
+
+/*Donut Chart-Blood bank Table*/
+.chart_head{
+    color: white;
+    padding: 20px;
+    width: 82%;
+    background: rgb(14, 7, 75);
+    border-bottom: 1px solid #e0e4e8;
+    font-size: 20px;
+    border-radius: 10px;
+    font-family: "Roboto Slab";
+}
+
+/*About Us Section*/
+.footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    width: 100vw;
+    font-family: "Open Sans";
+    padding-top: 40px;
+}
+
+.about_us{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    background: rgb(14, 7, 75);
+    color: #fff;
+}
+.about_us h3{
+    font-size: 1.8rem;
+    font-weight: 400;
+    text-transform: capitalize;
+    line-height: 3rem;
+}
+.about_us p{
+    max-width: 500px;
+    margin: 10px auto;
+    line-height: 28px;
+    font-size: 14px;
+}
+
+.socials{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0 3rem 0;
+}
+.socials li{
+    margin: 0 10px;
+}
+.socials a{
+    text-decoration: none;
+    color: #fff;
+}
+.socials a i{
+    font-size: 1.1rem;
+    transition: color .4s ease;
+}
+.socials a:hover i{
+    color: aqua;
+}
+
+.footer-bottom{
+    background: #000;
+    width: 100vw;
+    padding: 20px 0;
+    text-align: center;
+}
+.footer-bottom p{
+    font-size: 14px;
+    word-spacing: 2px;
+    text-transform: capitalize;
+    color: #fff;
+}

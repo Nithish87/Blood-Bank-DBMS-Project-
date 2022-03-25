@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin Login</title>
+        <link rel="stylesheet" type="text/css" href="../User/stylelogin.css">
+
+        <style> 
+            body{
+                background-image: url(../Images/background13.jpg);
+            }
+
+            .center{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                width: 400px;
+                background: white;
+                border-radius: 10px;
+            }
+        </style> 
+    </head>
+
+    <body>
+    <div class="center">
+        <h1>Admin Log In</h1>
+
+        <!--FIll admin info for login-->
+        <form action="loginAdmin.php" method="post">
+            <div class="txt_field">
+                <!-- required-> compulsorily should be filed-->
+                <input type="email" id="emailID" name="emailID" required>
+                <br>
+                <span></span>
+                <label for="emailID">Email ID:</label>
+            </div>
+
+            <div  class="txt_field">
+                <input type="password" id="password" name="password" minlength="8" maxlength="15" required>
+                <br>
+                <label for="password">Password:</label>
+            </div>
+
+           <!--<div class="pass">Forgot Password</div>--> 
+
+            <div>
+                <!--Redirects to loginAdmin.php-->
+                <br>
+                <input type="submit" value="Login">
+            </div>
+            <!--Button to login as user-->
+            <div class="signup">
+                Login as <a href="../User/login.html">User</a>
+            </div>
+        </form>
+    </div> 
+    </body>
+</html>
