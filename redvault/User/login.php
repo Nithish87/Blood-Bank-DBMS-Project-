@@ -14,6 +14,7 @@
 <body>
     
 <?php
+//include('C:\xampp\htdocs\redvault\node_modules\sweetalert\dist\sweetalert.min.js');
 
 $host="localhost";
 $user="root";
