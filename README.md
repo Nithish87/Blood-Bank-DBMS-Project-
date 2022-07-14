@@ -1,4 +1,7 @@
 # DBMS-Lab-Mini-Project
+NOTE: Internet connection is required for the application to function properly.
+
+
 Tables:
 
 1]BLOOD => Name(PK),Quantity
@@ -12,3 +15,4 @@ Tables:
 5}REGISTER => RegistrationID(PK},CampID(PK,FK: CAMP(CampID),UserID(FK: USER(Email)
 
 6]DONATED => DonationID(PK),CampID(PK,FK: CAMP(CampID),UserID(PK,FK: USER(Email),Quantity
+
